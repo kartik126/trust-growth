@@ -5,6 +5,7 @@ import routes from './routes';
 import pdfRoutes from './routes/pdf.routes';
 import scraperRoutes from './routes/scraper.routes';
 import analysisRoutes from './routes/analysis.routes';
+import summaryRoutes from './routes/summary.routes';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api', routes);
 app.use('/api/pdf', pdfRoutes);
 app.use('/api/scrape', scraperRoutes);
 app.use('/api/analysis', analysisRoutes);
+app.use('/api/summary', summaryRoutes);
 
 const PORT = process.env.PORT || 8000;
 

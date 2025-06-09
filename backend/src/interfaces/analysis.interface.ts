@@ -21,6 +21,7 @@ export interface AnalysisResult {
     context: {
       industry: string;
       companySize: string;
+      region: string;
       dataQuality: string;
     };
     metadata: {
