@@ -70,7 +70,10 @@ export class AnalysisService {
             Name: ${metadata.companyName}
             Data Sources: ${JSON.stringify(metadata.dataSources)}
 
-            Content to Analyze:
+            Content Embeddings:
+            ${JSON.stringify(embeddings)}
+
+            Full Content to Analyze:
             ${content}
 
             Important scoring rules:
