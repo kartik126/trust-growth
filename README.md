@@ -41,8 +41,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api
 ### Step 1: Clone and Install Dependencies
 ```bash
 # Clone the repository (if you haven't already)
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/kartik126/trust-growth.git
 
 # Install backend dependencies
 cd backend
