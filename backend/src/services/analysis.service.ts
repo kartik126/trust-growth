@@ -2,14 +2,12 @@ import { AnalysisResult } from "../interfaces/analysis.interface";
 import { config } from '../config/config';
 import NodeCache from 'node-cache';
 import OpenAI from 'openai';
-import { EmbeddingsService } from './embeddings.service';
 
 // Cache configuration
 const CACHE_TTL = 3600; // 1 hour
 
 export class AnalysisService {
   private readonly openai: OpenAI;
-  private readonly embeddingsService: EmbeddingsService;
   private cache: NodeCache;
   private processingQueue: Map<string, Promise<AnalysisResult>>;
 
@@ -17,7 +15,6 @@ export class AnalysisService {
     this.openai = new OpenAI({
       apiKey: config.openai.apiKey,
     });
-    this.embeddingsService = new EmbeddingsService();
     this.cache = new NodeCache({ stdTTL: CACHE_TTL });
     this.processingQueue = new Map();
   }
@@ -59,9 +56,6 @@ export class AnalysisService {
       // Create new analysis promise
       const analysisPromise = (async () => {
         try {
-          // Process content in chunks using embeddings service
-          const embeddings = await this.embeddingsService.processContentInChunks(content);
-          
           const prompt: string = `
             You are a JSON-only response generator. Analyze the following company content and provide scores (0-100) and justifications for Trust and Growth metrics.
             IMPORTANT: Respond ONLY with valid JSON. Do not include any code, explanations, or other text.
@@ -70,10 +64,7 @@ export class AnalysisService {
             Name: ${metadata.companyName}
             Data Sources: ${JSON.stringify(metadata.dataSources)}
 
-            Content Embeddings:
-            ${JSON.stringify(embeddings)}
-
-            Full Content to Analyze:
+            Content to Analyze:
             ${content}
 
             Important scoring rules:
